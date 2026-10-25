@@ -1,0 +1,48 @@
+## .NET
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+.vs/
+*.DotSettings.user
+
+## Publish output
+artifacts/
+publish/
+dist/
+out/
+
+## OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+## IDE
+.idea/
+*.swp
+*~
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+## Test / coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+## Secrets / local
+*.pfx
+*.p12
+.env
+.env.*
+!.env.example
+
+_history_backup/
+_make_history.py
