@@ -19,4 +19,10 @@
     <PackageReference Include="Avalonia.Desktop" Version="11.2.5" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
   </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="..\..\assets\duck_eyes_open.png" Link="Assets\duck_eyes_open.png" />
+    <AvaloniaResource Include="..\..\assets\duck_eyes_closed.png" Link="Assets\duck_eyes_closed.png" />
+    <AvaloniaResource Include="..\..\assets\tray_icon.ico" Link="Assets\tray_icon.ico" />
+  </ItemGroup>
 </Project>

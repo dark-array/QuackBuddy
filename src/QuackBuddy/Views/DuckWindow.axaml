@@ -10,6 +10,7 @@
         Background="Transparent"
         Topmost="True"
         ShowInTaskbar="False"
-        WindowStartupLocation="Manual">
-  <Image x:Name="DuckImage" Stretch="Uniform" />
+        WindowStartupLocation="Manual"
+        Icon="/Assets/tray_icon.ico">
+  <Image x:Name="DuckImage" Stretch="Uniform" Cursor="Hand" />
 </Window>
