@@ -4,11 +4,13 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using QuackBuddy.Helpers;
+using QuackBuddy.Services;
 
 namespace QuackBuddy.Views;
 
 public partial class DuckWindow : Window
 {
+    private readonly BlinkController _blinkController;
     private Bitmap? _eyesOpen;
     private Bitmap? _eyesClosed;
 
@@ -16,6 +18,7 @@ public partial class DuckWindow : Window
     {
         InitializeComponent();
         WindowChromeHelper.ApplyOverlayChrome(this);
+        _blinkController = new BlinkController(SetEyesOpen);
         Opened += OnOpened;
         Closed += OnClosed;
     }
@@ -24,10 +27,12 @@ public partial class DuckWindow : Window
     {
         LoadSprites();
         PositionNearBottomRight();
+        _blinkController.Start();
     }
 
     private void OnClosed(object? sender, EventArgs e)
     {
+        _blinkController.Dispose();
         _eyesOpen?.Dispose();
         _eyesClosed?.Dispose();
     }
@@ -41,6 +46,13 @@ public partial class DuckWindow : Window
 
     private static Bitmap LoadBitmap(string uri) =>
         new(AssetLoader.Open(new Uri(uri)));
+
+    private void SetEyesOpen(bool open)
+    {
+        if (_eyesOpen is null || _eyesClosed is null)
+            return;
+        DuckImage.Source = open ? _eyesOpen : _eyesClosed;
+    }
 
     private void PositionNearBottomRight()
     {
