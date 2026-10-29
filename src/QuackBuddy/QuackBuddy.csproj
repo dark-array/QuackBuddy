@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
@@ -24,5 +24,6 @@
     <AvaloniaResource Include="..\..\assets\duck_eyes_open.png" Link="Assets\duck_eyes_open.png" />
     <AvaloniaResource Include="..\..\assets\duck_eyes_closed.png" Link="Assets\duck_eyes_closed.png" />
     <AvaloniaResource Include="..\..\assets\tray_icon.ico" Link="Assets\tray_icon.ico" />
+    <EmbeddedResource Include="..\..\assets\quack.wav" Link="Assets\quack.wav" LogicalName="QuackBuddy.Assets.quack.wav" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,8 @@
         Title="QuackBuddy"
         Width="320"
         Height="320"
+        MinWidth="128"
+        MinHeight="128"
         CanResize="False"
         SystemDecorations="None"
         TransparencyLevelHint="Transparent"
@@ -12,5 +14,9 @@
         ShowInTaskbar="False"
         WindowStartupLocation="Manual"
         Icon="/Assets/tray_icon.ico">
-  <Image x:Name="DuckImage" Stretch="Uniform" Cursor="Hand" />
+  <Image x:Name="DuckImage"
+         Stretch="Uniform"
+         Cursor="Hand"
+         PointerPressed="OnDuckPointerPressed"
+         PointerReleased="OnDuckPointerReleased" />
 </Window>

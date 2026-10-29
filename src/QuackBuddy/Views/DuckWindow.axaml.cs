@@ -1,6 +1,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using QuackBuddy.Helpers;
@@ -10,9 +11,11 @@ namespace QuackBuddy.Views;
 
 public partial class DuckWindow : Window
 {
+    private readonly ISoundService _soundService = new SoundService();
     private readonly BlinkController _blinkController;
     private Bitmap? _eyesOpen;
     private Bitmap? _eyesClosed;
+    private bool _pointerDown;
 
     public DuckWindow()
     {
@@ -22,6 +25,8 @@ public partial class DuckWindow : Window
         Opened += OnOpened;
         Closed += OnClosed;
     }
+
+    public void PlayQuack() => _soundService.PlayQuack();
 
     private void OnOpened(object? sender, EventArgs e)
     {
@@ -33,6 +38,7 @@ public partial class DuckWindow : Window
     private void OnClosed(object? sender, EventArgs e)
     {
         _blinkController.Dispose();
+        _soundService.Dispose();
         _eyesOpen?.Dispose();
         _eyesClosed?.Dispose();
     }
@@ -62,5 +68,20 @@ public partial class DuckWindow : Window
         Position = new PixelPoint(
             area.X + area.Width - (int)Width - margin,
             area.Y + area.Height - (int)Height - margin);
+    }
+
+    private void OnDuckPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            _pointerDown = true;
+    }
+
+    private void OnDuckPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (!_pointerDown)
+            return;
+        _pointerDown = false;
+        if (e.InitialPressMouseButton == MouseButton.Left)
+            PlayQuack();
     }
 }
