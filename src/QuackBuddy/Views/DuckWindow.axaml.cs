@@ -11,16 +11,23 @@ namespace QuackBuddy.Views;
 
 public partial class DuckWindow : Window
 {
+    private const double DragThreshold = 4.0;
+
     private readonly ISoundService _soundService = new SoundService();
     private readonly BlinkController _blinkController;
+
     private Bitmap? _eyesOpen;
     private Bitmap? _eyesClosed;
+
     private bool _pointerDown;
+    private bool _dragging;
+    private Point _pressPoint;
 
     public DuckWindow()
     {
         InitializeComponent();
         WindowChromeHelper.ApplyOverlayChrome(this);
+
         _blinkController = new BlinkController(SetEyesOpen);
         Opened += OnOpened;
         Closed += OnClosed;
@@ -57,6 +64,7 @@ public partial class DuckWindow : Window
     {
         if (_eyesOpen is null || _eyesClosed is null)
             return;
+
         DuckImage.Source = open ? _eyesOpen : _eyesClosed;
     }
 
@@ -72,16 +80,46 @@ public partial class DuckWindow : Window
 
     private void OnDuckPointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            _pointerDown = true;
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            return;
+
+        _pointerDown = true;
+        _dragging = false;
+        _pressPoint = e.GetPosition(this);
+        e.Pointer.Capture(DuckImage);
+    }
+
+    private void OnDuckPointerMoved(object? sender, PointerEventArgs e)
+    {
+        if (!_pointerDown)
+            return;
+
+        var current = e.GetPosition(this);
+        var delta = current - _pressPoint;
+
+        if (!_dragging && (Math.Abs(delta.X) + Math.Abs(delta.Y)) >= DragThreshold)
+            _dragging = true;
+
+        if (!_dragging)
+            return;
+
+        var scaling = DesktopScaling;
+        Position = new PixelPoint(
+            Position.X + (int)(delta.X * scaling),
+            Position.Y + (int)(delta.Y * scaling));
     }
 
     private void OnDuckPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
         if (!_pointerDown)
             return;
+
+        e.Pointer.Capture(null);
+        var wasDragging = _dragging;
         _pointerDown = false;
-        if (e.InitialPressMouseButton == MouseButton.Left)
+        _dragging = false;
+
+        if (!wasDragging && e.InitialPressMouseButton == MouseButton.Left)
             PlayQuack();
     }
 }
