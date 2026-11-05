@@ -8,7 +8,7 @@
     <RootNamespace>QuackBuddy</RootNamespace>
     <AssemblyName>QuackBuddy</AssemblyName>
     <Product>QuackBuddy</Product>
-    <Version>0.1.0</Version>
+    <Version>1.1.0</Version>
     <Authors>QuackBuddy Contributors</Authors>
     <Description>Lightweight always-on-top rubber duck debugging companion.</Description>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>

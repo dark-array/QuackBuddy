@@ -21,6 +21,14 @@ dotnet restore QuackBuddy.sln
 dotnet run --project src/QuackBuddy/QuackBuddy.csproj
 ```
 
+### Windows installer (v1.1+)
+
+```powershell
+./scripts/build-installer-windows.ps1
+```
+
+Requires [Inno Setup 6](https://jrsoftware.org/isinfo.php). Output: `artifacts/installer/QuackBuddy-Setup-1.1.0.exe`.
+
 Published binaries: see [docs/building.md](docs/building.md).
 
 ## Rubber duck debugging?
